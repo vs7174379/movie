@@ -13,11 +13,14 @@ import ListBookings from "./pages/admin/ListBookings"
 import Footer from "./components/Footer"
 import { Toaster } from "react-hot-toast"
 import Layout from "./pages/admin/Layout"
+import { SignIn } from "@clerk/clerk-react"
+import { useAppContext } from "./context/AppContext"
 
 
 
 function App() {
   const isAdminRoute = useLocation().pathname.startsWith('/admin')
+    const { user } = useAppContext()
 
   return (
     <>
@@ -31,18 +34,23 @@ function App() {
         <Route path='/my-bookings' element={<MyBookings />} />
         <Route path='/favorite' element={<Favorite />} />
 
-        <Route path='/admin/*' element={<Layout />} >
+        <Route path='/admin/*' element={user ? <Layout /> : (
+          <div className='min-h-screen flex justify-center items-center'>
+
+            <SignIn fallbackRedirectUrl={'/admin'} />
+          </div>
+        )}>
 
 
-        <Route index element={<Dashboard />} />
-        <Route path="add-shows" element={<AddShows/>} />
-        <Route path="list-shows" element={<ListShows />} />
-        <Route path="list-bookings" element={<ListBookings />} />
-      </Route>
-    </Routes >
+          <Route index element={<Dashboard />} />
+          <Route path="add-shows" element={<AddShows />} />
+          <Route path="list-shows" element={<ListShows />} />
+          <Route path="list-bookings" element={<ListBookings />} />
+        </Route>
+      </Routes >
 
       {!isAdminRoute && <Footer />
-}
+      }
     </>
   )
 }
