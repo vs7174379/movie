@@ -23,6 +23,7 @@ export const AppProvider = ({ children }) => {
     const fetchIsAdmin = async () => {
         try {
             const { data } = await axios.get('/api/admin/is-admin', { headers: { Authorization: ` Bearer ${await getToken()}` } })
+            console.log(data.isAdmin)
 
             setIsAdmin(data.isAdmin)
             if (!data.isAdmin && location.pathname.startsWith('/admin')) {
