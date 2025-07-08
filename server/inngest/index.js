@@ -2,7 +2,7 @@ import { Inngest } from "inngest";
 import User from "../models/user.js";
 
 // Create a client to send and receive events
-export const inngest = new Inngest({ id: "movie-ticket-app" });
+export const inngest = new Inngest({ id: "movie" });
 
 // Create an empty array where we'll export future Inngest functions
 
